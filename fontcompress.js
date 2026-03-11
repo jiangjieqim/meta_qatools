@@ -5,11 +5,12 @@ let cwd = process.cwd();
 let Fontmin = require(`${cwd}\\npm\\node_modules\\fontmin\\index.js`);
 let rename = require(`${cwd}\\npm\\node_modules\\layaair2-cmd\\node_modules\\gulp-rename`)
 cmd.option("-i <string>","this is path");
+cmd.option("--disableFont","disable font");
 
 cmd.parse(process.argv);
 //  node fontcompress.js -i "D:\jjq\game\trunk"
 let trunk = cmd.opts().i // `D:\\jjq\\game\\trunk`
-
+let disableFont = cmd.opts().i
 let filename = 'BOLD.ttf';
 
 // D:\jjq\game\trunk\resource\res\font
@@ -19,35 +20,37 @@ if(!fs.existsSync(jsonParent)){
     let err = '['+jsonParent + " not exist!]";
     throw err;
 }
-let _list3 = fs.readdirSync(jsonParent);
 let allStr = '';
-for(let i = 0;i < _list3.length;i++){
-    let url =  `${jsonParent}/${_list3[i]}`;
-    let stats = fs.statSync(url);
-    let isFile = stats.isFile();
-    if(isFile){
-        // configFileList.push(url);
-    
-        let str = fs.readFileSync(url);
-        // allStr += str;
-        let o = JSON.parse(str);
-        // console.log(o);
-        for(let n in o){
-            let v = o[n];
-            // console.log(v);
-            for(let m in v){
-                // console.log(v[m]);
-                allStr+=v[m];
-            }
-        }
 
+if(disableFont){
+
+}else{
+    let _list3 = fs.readdirSync(jsonParent);
+
+    for(let i = 0;i < _list3.length;i++){
+        let url =  `${jsonParent}/${_list3[i]}`;
+        let stats = fs.statSync(url);
+        let isFile = stats.isFile();
+        if(isFile){
+            // configFileList.push(url);
+        
+            let str = fs.readFileSync(url);
+            // allStr += str;
+            let o = JSON.parse(str);
+            // console.log(o);
+            for(let n in o){
+                let v = o[n];
+                // console.log(v);
+                for(let m in v){
+                    // console.log(v[m]);
+                    allStr+=v[m];
+                }
+            }
+
+        }
     }
 }
-
-// console.log(allStr);
-// allStr = "賬";
-// allStr = 'a';
-// allStr = '中';
+console.log(`disableFont is ${disableFont||""} font String is:[${allStr}]`)
 let fontpath = `${trunk}\\resource\\remote\\font\\`;
 const fontmin = new Fontmin()
     .src(`${trunk}\\gameclient_ui\\BOLD.ttf`)

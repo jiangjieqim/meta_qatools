@@ -16,6 +16,8 @@ let rollup = require(`${cwd}/npm/node_modules/layaair2-cmd/node_modules/rollup`)
 cmd.option("-w <string>","project workspace");
 cmd.option("-c","compress");
 cmd.option("--disableFont","disable font");
+cmd.option("--skipFont","skipFont compress font");
+
 cmd.option("--tsc","use tsc");
 
 cmd.parse(process.argv);
@@ -40,13 +42,13 @@ function uglifyAndZip(){
 
 let opt = cmd.opts()
 let trunk = path.dirname(w);
-if (opt.disableFont){
-
+if (opt.skipFont){
+    console.log("skip compress font !")
 }else{
 
     //压缩字体
     try{
-        console.log(execSync(`node fontcompress.js -i "${trunk}"`).toString());
+        console.log(execSync(`node fontcompress.js -i "${trunk}"${opt.disableFont?" --disableFont":""}`).toString());
     }catch(e){
         console.log(e.stack);
     }
