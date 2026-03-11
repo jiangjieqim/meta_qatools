@@ -1,0 +1,1 @@
+node ui_export.js -ui "D:/jjq/game/ui" -out "D:/jjq/game/resource"  -client "D:/jjq/game/gameclient" -atlas

@@ -1,0 +1,765 @@
+ <!-- /// <summary>
+    /// 注册请求
+    /// </summary>
+    [ProtoContract]
+    public class WebClientRegistReq : ProtoBody {
+        [ProtoMember(1)] public EPID pid = EPID.Internal;//平台类型
+        [ProtoMember(2)] public string account = string.Empty;//账号id
+        [ProtoMember(3)] public string password = string.Empty;//账号密码
+    } -->
+<?xml version="1.0" encoding="utf-8"?> 
+<proto id="1001" name="Heartbeat" desc="心跳" type="req">
+</proto>
+<proto id="1002" name="Heartbeat" desc="心跳返回" type="revc">
+</proto>
+
+<!-- /// <summary>
+    /// 踢出通知
+    /// </summary>
+    [ProtoContract]
+    public class KickNtf : ProtoBody {
+        //踢出原因
+        [ProtoMember(1)] public KickReason reason;
+    } -->
+<proto id="1003" name="Kick" desc="踢出通知" type="ntf">
+        <protobuf type="uint8" name="reason" desc="踢出原因  /// <summary>
+    /// 被踢原因
+    /// </summary>
+    public enum KickReason {
+        AccountDuplicate,//同名账号登录
+    }" ></protobuf> 
+</proto>
+
+<proto id="3001" name="WebClientRegist" desc="注册请求" type="req">
+    <protobuf type="uint8" name="pid" desc="平台类型" ></protobuf> 
+    <protobuf type="string" name="account" desc="账号id" ></protobuf>
+    <protobuf type="string" name="password" desc="账号密码" ></protobuf> 
+</proto>
+
+<proto id="3002" name="WebClientRegist" desc="网页客户端注册返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="错误码 Success = 0//注册成功Failed = 1,//注册失败AlreadyExist = 2,//该账号已经存在" ></protobuf> 
+    <protobuf type="uint8" name="pid" desc="平台类型 Internal = 0,内部登录 WxMini = 1,微信小游戏QQMini = 2,QQ小游戏" ></protobuf>
+</proto>
+
+<proto id="3003" name="WebClientLogin" desc="请求登录" type="req">
+    <protobuf type="uint8" name="pid" desc="平台类型" ></protobuf> 
+    <protobuf type="string" name="account" desc="账号id" ></protobuf>
+    <protobuf type="string" name="password" desc="账号密码" ></protobuf> 
+</proto>
+
+
+<!---
+    登录返回
+-->
+
+<!-- /**服务器配置*/
+export class stServerConfig {
+    //心跳间隔毫秒数
+    public HeartMillisecond: number = 0;
+    //服务器时间
+    public ServerTime: string = StringUtil.Empty;
+} -->
+<proto name="stServerConfig">
+    <protobuf type="uint32" name="HeartMillisecond" desc="心跳间隔毫秒数" ></protobuf> 
+    <protobuf type="string" name="ServerTime" desc="服务器时间" ></protobuf> 
+</proto>
+
+
+
+    <!-- /// <summary>
+    /// 玩家货币修改通知
+    /// </summary>
+    [ProtoContract]
+    public class PlayerPurseChangeNtf : ProtoBody
+    {
+        //货币类型
+        [ProtoMember(1)] public EPurseType Type = EPurseType.None;
+        //当前数量
+        [ProtoMember(2)] public float CurNum = 0;
+        //变化数量
+        [ProtoMember(3)] public float ChangNum = 0;
+    } -->
+
+<proto id="4001" name="PlayerPurseChange" desc="玩家货币修改通知" type="ntf">
+
+    <protobuf type="uint8" name="Type" desc="  public enum EPurseType
+    {
+        None,
+        COIN = 1,//金币
+        MAKE = 2,//MAKE币
+        USDT = 3,//USDT币
+    }
+" ></protobuf> 
+    <protobuf type="double" name="CurNum" desc="当前数量" ></protobuf>
+    <protobuf type="double" name="ChangNum" desc="变化数量" ></protobuf> 
+</proto>
+
+ <!-- /**玩家数据 */############################################################################################ -->
+<!-- 
+export class stPlayerData {
+    public Account: string = StringUtil.Empty;              //账号
+    public NickName: string = StringUtil.Empty;             //角色昵称
+    public Sex: ERoleSex = ERoleSex.Boy;                    //角色性别
+    public SelfIp: string = StringUtil.Empty;               //自己的外网IP
+    public AccountId: number = 0;                           //账号ID
+    public HeadUrl: string = StringUtil.Empty;              //头像
+    public HeadUrls: Array<string> = new Array<string>();   //全部头像
+    public WorldId: number = 0;                             //世界ID         
+} -->
+<proto name="stPlayerData">
+    <protobuf type="string" name="Account" desc="账号" ></protobuf> 
+    <protobuf type="string" name="NickName" desc="角色昵称" ></protobuf> 
+    <protobuf type="uint8" name="Sex" desc="角色性别" ></protobuf> 
+    <protobuf type="string" name="SelfIp" desc="自己的外网IP" ></protobuf> 
+    <protobuf type="uint64" name="AccountId" desc="账号ID" ></protobuf> 
+    <protobuf type="string" name="HeadUrl" desc="头像" ></protobuf> 
+    <protobuf type="array" itemtype="string" name="HeadUrls" desc="全部头像" ></protobuf> 
+    <protobuf type="uint64" name="WorldId" desc="世界ID" ></protobuf> 
+</proto>
+<!--
+export enum EPlayerState {
+    //正常
+    Play = 0,
+    //战斗
+    Battle = 1,
+} -->
+<proto name="stPlayerStatus">
+    <protobuf type="uint8" name="playerState" desc="状态" ></protobuf> 
+</proto>
+
+
+
+
+  <!-- //资产信息
+    public PurseInfo: stPurseInfo = new stPurseInfo();
+    //道具信息
+    public PropInfo: stPropInfo = new stPropInfo();
+    //公告信息
+    public NoticeInfo: stNoticeInfo = new stNoticeInfo(); -->
+<proto name="stPlayerBaseInfo">
+    <protobuf type="stPurseInfo"  name="PurseInfo" desc="资产信息" ></protobuf>
+    <protobuf type="stPropInfo"  name="PropInfo" desc="道具信息" ></protobuf>
+    <protobuf type="stNoticeInfo"  name="NoticeInfo" desc="公告信息" ></protobuf>
+</proto>
+
+<!-- 
+
+/**货币条目 */
+export class stPurseItem {
+    //类型
+    public type: EPurseType = EPurseType.None;
+    //数量
+    public count: number = 0;
+} -->
+<proto name="stPurseItem">
+    <protobuf type="uint8" name="type" desc="类型" ></protobuf> 
+    <protobuf type="double" name="count" desc="数量" ></protobuf> 
+</proto>
+
+
+<!-- //道具类型
+public type: EPropType = EPropType.None;
+//道具数量
+public count: number = 0; -->
+<proto name="s_stPropItem">
+    <protobuf type="uint8" name="type" desc="道具类型" ></protobuf> 
+    <protobuf type="double" name="count" desc="道具数量" ></protobuf> 
+</proto>
+
+
+<!-- /**资金信息 */
+export class stPurseInfo {
+    //资金信息列表
+    public PurseItems: Array<stPurseItem> = new Array<stPurseItem>();
+} -->
+<proto name="stPurseInfo">
+    <protobuf type="array" itemtype="stPurseItem" name="PurseItems" desc="资金信息列表" ></protobuf> 
+</proto>
+<!-- /**道具信息 */
+export class stPropInfo {
+    //道具列表
+    public PropItems: Array<stPropItem> = new Array<stPropItem>();
+} -->
+<proto name="stPropInfo">
+    <protobuf type="array" itemtype="s_stPropItem" name="PropItems" desc="道具列表" ></protobuf> 
+</proto>
+<!-- /**公告信息 */
+export class stNoticeInfo {
+    //是否显示公告
+    public IsShow: boolean = false;
+} -->
+
+<proto name="stNoticeInfo">
+    <protobuf type="uint8" name="IsShow" desc="是否显示公告" ></protobuf> 
+</proto>
+
+
+<proto id="3004" name="WebClientLogin" desc="请求登录" type="revc">
+       <!-- // public enum ErrorID {
+         public enum ErrorID {
+            Success = 0,//登录成功
+            Failed = 1,//登录失败
+            AccountStopUseing = 2,//账号停用中
+            NoAccount = 3,//账号不存在
+            PasswordError = 4,//密码错误
+            MiniCodeWrong = 5,//小游戏小游戏Code错误错误
+            MiniInnerTokenWrong = 6,//小游戏内部Token错误
+        }
+    // } -->
+    <protobuf type="uint8" name="errorID" desc="错误码" ></protobuf> 
+    <protobuf type="stServerConfig"  name="serverConfig" desc="服务配置信息" ></protobuf>
+    <protobuf type="stPlayerData"  name="playerData" desc="玩家数据" ></protobuf>
+    <protobuf type="stPlayerStatus"  name="playerStatus" desc="玩家状态" ></protobuf>
+    <protobuf type="stPlayerBaseInfo"  name="BaseInfo" desc="玩家基础信息" ></protobuf>
+
+
+
+  <!-- //服务配置信息
+    public serverConfig: stServerConfig = new stServerConfig();
+    //玩家数据
+    public playerData: stPlayerData = new stPlayerData();
+    //玩家状态
+    public playerStatus: stPlayerStatus = new stPlayerStatus();
+    //玩家基础信息
+    public BaseInfo: stPlayerBaseInfo = new stPlayerBaseInfo(); -->
+</proto>
+
+
+<!-- 获取玩家角色组件列表请求 -->
+<proto id="4027" name="GetPlayerParts" desc="获取玩家角色组件列表请求" type="req">
+</proto>
+
+
+    <!-- /// <summary>
+    /// 获取玩家角色组件列表返回
+    /// </summary>
+    [ProtoContract]
+    public class GetPlayerPartsRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //角色组件列表
+        [ProtoMember(2)] public List<uint> parts = new List<uint>();
+    } -->
+
+<proto id="4028" name="GetPlayerParts" desc="获取玩家角色组件列表返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="错误码 Success = 0,//成功 Failed = 1,//失败" ></protobuf>
+    <protobuf type="array" itemtype="uint32" name="parts" desc="角色组件列表" ></protobuf>
+</proto>
+
+<!-- 
+
+/// <summary>
+/// 玩家创建组件请求
+/// </summary>
+export class PlayerCreateReq {
+    //性别
+    public sex: ERoleSex = ERoleSex.Boy;
+    //昵称
+    public nickname: string = StringUtil.Empty;
+    //角色组件列表
+    public parts: Array<number> = new Array<number>();
+} -->
+
+<proto id="4029" name="PlayerCreate" desc="玩家创建组件请求" type="req">
+    <protobuf type="uint8" name="sex" desc="性别" ></protobuf>
+    <protobuf type="string" name="nickname" desc="昵称" ></protobuf> 
+    <protobuf type="array" itemtype="uint32" name="parts" desc="角色组件列表" ></protobuf>
+</proto>
+
+
+<!-- 
+ /// <summary>
+    /// 玩家创建组件返回
+    /// </summary>
+    [ProtoContract]
+    public class PlayerCreateRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //性别
+        [ProtoMember(2)] public ERoleSex sex = ERoleSex.Boy;
+        //昵称
+        [ProtoMember(3)] public string nickname = "";
+        //角色组件列表
+        [ProtoMember(4)] public List<uint> parts = new List<uint>();
+    } -->
+
+<proto id="4030" name="PlayerCreate" desc="玩家创建组件返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="错误码" ></protobuf>
+    <protobuf type="uint8" name="sex" desc="性别" ></protobuf>
+    <protobuf type="string" name="nickname" desc="昵称" ></protobuf> 
+    <protobuf type="array" itemtype="uint32" name="parts" desc="角色组件列表" ></protobuf>
+</proto>
+
+
+<!-- /**获取世界玩家列表请求 */
+export class GetWorldPlayerListReq {
+
+} -->
+<proto id="7015" name="GetWorldPlayerList" desc="获取世界玩家列表请求" type="req">
+    
+</proto>
+
+<!-- 
+    /// <summary>
+    /// 获取世界玩家列表返回
+    /// </summary>
+    [ProtoContract]
+    public class GetWorldPlayerListRsp : ProtoBody {
+        public enum ErrorID {
+            //成功
+            Success = 0,
+            //失败
+            Failed = 1,
+            //不在该世界
+            NotInTheWorld = 2,
+            //该世界不存在
+            WorldNotAlive = 3,
+        }
+
+        [ProtoMember(1)] public ErrorID errorID;
+        //世界Id
+        [ProtoMember(2)] public ulong WorldId = 0;
+        //玩家列表
+        [ProtoMember(3)] public List<stWorldPlayerItem> PlayerItems = new List<stWorldPlayerItem>();
+    }
+ -->
+
+
+<proto id="7016" name="GetWorldPlayerList" desc="获取世界玩家列表返回" type="revc">
+        <protobuf type="uint8" name="errorID" desc="错误码   //成功
+            Success = 0,
+            //失败
+            Failed = 1,
+            //不在该世界
+            NotInTheWorld = 2,
+            //该世界不存在
+            WorldNotAlive = 3," ></protobuf>
+
+    <protobuf type="uint64" name="WorldId" desc="世界Id" ></protobuf>
+    <protobuf type="array" itemtype="stWorldPlayerItem" name="PlayerItems" desc="玩家列表" ></protobuf>
+
+
+</proto> 
+
+    <!-- /// <summary>
+    /// 世界玩家条目
+    /// </summary>
+    [ProtoContract]
+    public class stWorldPlayerItem {
+        //用户Id
+        [ProtoMember(1)] public ulong UserId = 0;
+        //位置
+        [ProtoMember(2)] public stVec3 Pos = new stVec3();
+        //角度
+        [ProtoMember(3)] public stVec3 Euler = new stVec3();
+        //性别
+        [ProtoMember(4)] public ERoleSex Sex = ERoleSex.Other;
+        //装扮
+        [ProtoMember(5)] public List<uint> PartIds = new List<uint>();
+    } -->
+
+
+<proto name="stWorldPlayerItem">
+    <protobuf type="uint64" name="UserId" desc="用户Id" ></protobuf> 
+    <protobuf type="stVec3" name="Pos" desc="位置" ></protobuf>
+    <protobuf type="stVec3" name="Euler" desc="角度" ></protobuf>
+    <protobuf type="uint8" name="Sex" desc="性别" ></protobuf>
+    <protobuf type="array" itemtype="uint32" name="PartIds" desc="装扮" ></protobuf>
+</proto>
+
+<!-- 
+    /// <summary>
+    /// 三维信息
+    /// </summary>
+    [ProtoContract]
+    public class stVec3 {
+        [ProtoMember(1)] public long X = 0;
+        [ProtoMember(2)] public long Y = 0;
+        [ProtoMember(3)] public long Z = 0;
+        public stVec3() { }
+        public stVec3(long x, long y, long z) {
+            this.X = x; this.Y = y; this.Z = z;
+        }
+        public static stVec3 Zero { get { return new stVec3(0, 0, 0); } }
+    } -->
+
+<proto name="stVec3">
+    <protobuf type="int" name="X" desc="X" ></protobuf> 
+    <protobuf type="int" name="Y" desc="Y" ></protobuf> 
+    <protobuf type="int" name="Z" desc="Z" ></protobuf> 
+</proto>
+
+
+
+  <!-- UpdateSyncInfoReq,//刷新同步信息请求 -->
+  <!-- UpdateSyncInfoRsp,//刷新同步信息返回 -->
+
+      <!-- /// <summary>
+    /// 刷新同步信息请求
+    /// </summary>
+    [ProtoContract]
+    public class UpdateSyncInfoNtf : ProtoBody {
+        //用户Id
+        [ProtoMember(1)] public ulong UserId = 0;
+        //世界Id
+        [ProtoMember(2)] public ulong WorldId = 0;
+        //位置信息
+        [ProtoMember(3)] public stVec3 Pos = new stVec3();
+        //欧拉角
+        [ProtoMember(4)] public stVec3 Euler = new stVec3();
+    } -->
+
+
+<!-- /**刷新同步信息请求 */
+export class UpdateSyncInfoReq {
+    //位置信息
+    public Pos: stVec3 = new stVec3();
+    //欧拉角
+    public Euler: stVec3 = new stVec3();
+} -->
+<proto id="7012" name="UpdateSyncInfo" desc="刷新同步信息请求" type="req">
+    <protobuf type="stVec3" name="Pos" desc="位置信息" ></protobuf>
+    <protobuf type="stVec3" name="Euler" desc="欧拉角" ></protobuf>
+</proto>
+
+
+<!-- /**刷新同步信息返回 */
+export class UpdateSyncInfoRsp {
+    // public enum ErrorID {
+    //     //成功
+    //     Success = 0,
+    //     //失败
+    //     Failed = 1,
+    //     //不在该世界
+    //     NotInTheWorld = 2,
+    //     //该世界不存在
+    //     WorldNotAlive = 3,
+    // }
+
+    public errorID: number = 0;
+    //世界Id
+    public WorldId: number = 0;
+    //位置信息
+    public Pos: stVec3 = new stVec3();
+    //欧拉角
+    public Euler: stVec3 = new stVec3();
+} -->
+
+<proto id="7013" name="UpdateSyncInfo" desc="刷新同步信息返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc=" //成功Success = 0,//失败Failed = 1,//不在该世界NotInTheWorld = 2,//该世界不存在WorldNotAlive = 3," ></protobuf>
+    <protobuf type="uint64" name="WorldId" desc="世界Id" ></protobuf>
+    <protobuf type="stVec3" name="Pos" desc="位置信息" ></protobuf>
+    <protobuf type="stVec3" name="Euler" desc="欧拉角" ></protobuf>
+</proto>
+
+
+    <!-- UpdateSyncInfoNtf,//刷新同步信息通知 -->
+    <!-- /// <summary>
+    /// 刷新同步信息请求
+    /// </summary>
+    [ProtoContract]
+    public class UpdateSyncInfoNtf : ProtoBody {
+        //用户Id
+        [ProtoMember(1)] public ulong UserId = 0;
+        //世界Id
+        [ProtoMember(2)] public ulong WorldId = 0;
+        //位置信息
+        [ProtoMember(3)] public stVec3 Pos = new stVec3();
+        //欧拉角
+        [ProtoMember(4)] public stVec3 Euler = new stVec3();
+    } -->
+
+<proto id="7014" name="UpdateSyncInfo" desc="刷新同步信息通知" type="ntf">
+    <protobuf type="uint64" name="UserId" desc="用户Id" ></protobuf>
+    <protobuf type="uint64" name="WorldId" desc="世界Id" ></protobuf>
+    <protobuf type="stVec3" name="Pos" desc="位置信息" ></protobuf>
+    <protobuf type="stVec3" name="Euler" desc="欧拉角" ></protobuf>
+</proto>
+
+<!---好友相关############################################################################-->
+<!-- 4017 -->
+  <!-- GetFocusListReq,//获取关注列表请求 -->
+  <!-- GetFocusListRsp,//获取关注列表返回 -->
+<proto id="4017" name="GetFocusList" desc="获取关注列表请求" type="req">
+    <protobuf type="uint64" name="UserId" desc="用户Id" ></protobuf>
+</proto>
+
+    <!-- [ProtoContract]
+    public class stSimpleUser
+    {
+        [ProtoMember(1)] public ulong userId = 0;                   //用户ID
+        [ProtoMember(2)] public string nickName = string.Empty;     //用户昵称
+        [ProtoMember(3)] public string headUrl = string.Empty;      //用户头像
+    } -->
+<proto name="stSimpleUser">
+    <protobuf type="uint64" name="userId" desc="用户ID" ></protobuf>
+    <protobuf type="string" name="nickName" desc="用户昵称" ></protobuf>
+    <protobuf type="string" name="headUrl" desc="用户头像" ></protobuf>
+</proto>
+
+   <!-- /// <summary>
+    /// 好友条目
+    /// </summary>
+    [ProtoContract]
+    public class stFriendItem
+    {
+        //简单信息
+        [ProtoMember(1)] public stSimpleUser SimpleUser = new stSimpleUser();
+        //已创建天数
+        [ProtoMember(2)] public int CreatedDay = 0;
+        //发表动态数量
+        [ProtoMember(3)] public int DynamicCount = 0;
+        //最新动态
+        [ProtoMember(4)] public string NewDynamic = string.Empty;
+    } -->
+<proto name="stFriendItem">
+    <protobuf type="stSimpleUser" name="SimpleUser" desc="简单信息" ></protobuf>
+    <protobuf type="int" name="CreatedDay" desc="已创建天数" ></protobuf> 
+    <protobuf type="int" name="DynamicCount" desc="发表动态数量" ></protobuf> 
+    <protobuf type="string" name="NewDynamic" desc="最新动态" ></protobuf> 
+</proto>
+
+<!-- 
+    /// <summary>
+    /// 获取关注列表返回
+    /// </summary>
+    [ProtoContract]
+    public class GetFocusListRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //关注列表
+        [ProtoMember(2)] public List<stFriendItem> FocusList = new List<stFriendItem>();
+    } -->
+<proto id="4018" name="GetFocusList" desc="获取关注列表返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="錯誤碼" ></protobuf>
+    <protobuf type="array" itemtype="stFriendItem" name="FocusList" desc="关注列表" ></protobuf>
+</proto>
+
+
+  <!-- GetFinesListReq,//获取粉丝列表请求 -->
+  <!-- GetFinesListRsp,//获取粉丝列表返回 -->
+<proto id="4019" name="GetFinesList" desc="获取粉丝列表请求" type="req">
+    <protobuf type="uint64" name="UserId" desc="玩家Id" ></protobuf>
+</proto>
+ <!-- /// 获取粉丝列表返回
+    /// </summary>
+    [ProtoContract]
+    public class GetFinesListRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //粉丝列表
+        [ProtoMember(2)] public List<stFriendItem> FinesList = new List<stFriendItem>();
+    } -->
+
+  <proto id="4020" name="GetFinesList" desc="获取粉丝列表返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="错误码" ></protobuf>
+    <protobuf type="array" itemtype="stFriendItem" name="FinesList" desc="粉丝列表" ></protobuf>
+</proto>
+  
+<proto id="4021" name="RandMatchFrind" desc="随机匹配好友请求" type="req">
+    <protobuf type="uint8" name="MatchFilter" desc="筛选条件    None,   //不限 Man,    //男Woman   //女" ></protobuf>
+</proto>
+<!-- 
+
+    /// <summary>
+    /// 玩家信息
+    /// </summary>
+    [ProtoContract]
+    public class stPlayerInfo
+    {
+        //基本信息
+        [ProtoMember(1)] public stSimpleUser SimpleUser = new stSimpleUser();
+        //已创建天数
+        [ProtoMember(2)] public int CreatedDay = 0;
+        //发表动态数量
+        [ProtoMember(3)] public int DynamicCount = 0;
+        //标签Id列表
+        [ProtoMember(4)] public List<uint> TagList = new List<uint>();
+        //关注数量
+        [ProtoMember(5)] public int FocusCount = 0;
+        //粉丝数量
+        [ProtoMember(6)] public int FinesCount = 0;
+    } -->
+<proto name="stPlayerInfo">
+    <protobuf type="stSimpleUser" name="SimpleUser" desc="简单信息" ></protobuf>
+    <protobuf type="int" name="CreatedDay" desc="已创建天数" ></protobuf> 
+    <protobuf type="int" name="DynamicCount" desc="发表动态数量" ></protobuf> 
+    <protobuf type="array" itemtype="uint32" name="TagList" desc="标签Id列表" ></protobuf>
+    <protobuf type="int" name="FocusCount" desc="关注数量" ></protobuf> 
+    <protobuf type="int" name="FinesCount" desc="粉丝数量" ></protobuf> 
+</proto>
+  <!-- /// <summary>
+    /// 随机匹配好友返回
+    /// </summary>
+    [ProtoContract]
+    public class RandMatchFrindRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+            UnMatched = 2,//未匹配到
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //匹配好友信息
+        //[ProtoMember(2)] public stPlayerInfo FriendInfo = new stPlayerInfo();
+        [ProtoMember(2)] public List<stPlayerInfo> FriendList = new List<stPlayerInfo>();
+    } -->
+<proto id="4022" name="RandMatchFrind" desc="随机匹配好友返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="  Success = 0,//成功Failed = 1,//失败 UnMatched = 2,//未匹配到" ></protobuf>
+    <protobuf type="array" itemtype="stPlayerInfo" name="FriendList" desc="匹配好友信息" ></protobuf>
+</proto>
+
+
+
+<!-- 
+  /// <summary>
+    /// 银行查询利率请求
+    /// </summary>
+    [ProtoContract]
+    public class BankGetBecRateOfReq : ProtoBody
+    {
+
+    } 
+BankGetBecRateOfReq = 8001,//银行查询利率请求
+-->
+<proto id="8001" name="BankGetBecRateOf" desc="银行查询利率请求" type="req">
+</proto>
+<!-- 
+
+  /// <summary>
+    /// 银行查询利率返回
+    /// </summary>
+    [ProtoContract]
+    public class BankGetBecRateOfRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+        //利率列表
+        [ProtoMember(2)] public List<stBankRateItem> lstRates = new List<stBankRateItem>();
+    } -->
+
+<!-- stBankRateItem -->
+<!-- /// <summary>
+    /// 银行利率条目
+    /// </summary>
+    [ProtoContract]
+    public class stBankRateItem
+    {
+        [ProtoMember(1)]
+        public uint id = 0;
+
+        /// <summary>
+        /// 月份
+        /// </summary>
+        [ProtoMember(2)]
+        public int month = 0;
+
+        /// <summary>
+        /// 利率
+        /// </summary>
+        [ProtoMember(3)]
+        public float rateOf = 0;
+    } -->
+<proto name="stBankRateItem">
+    <protobuf type="uint32" name="id" desc="配置id"></protobuf>
+    <protobuf type="uint8" name="month" desc="月份"></protobuf>
+    <protobuf type="double" name="rateOf" desc="利率"></protobuf>
+</proto>
+<proto id="8002" name="BankGetBecRateOf" desc="银行查询利率返回" type="revc">
+        <protobuf type="uint8" name="errorID" desc="Success = 0,//成功Failed = 1,//失败" ></protobuf>
+        <protobuf type="array" itemtype="stBankRateItem" name="lstRates" desc="利率列表" ></protobuf>
+</proto>
+
+  <!-- BankSaveMoneyReq = 8003,//银行存钱请求
+  BankSaveMoneyRsp = 8004,//银行存钱返回 -->
+<proto id="8003" name="BankSaveMoney" desc="银行存钱请求" type="req">
+  <!-- /// <summary>
+    /// 银行存钱请求
+    /// </summary>
+    [ProtoContract]
+    public class BankSaveMoneyReq : ProtoBody
+    {
+        /// <summary>
+        /// 存款金额
+        /// </summary>
+        [ProtoMember(1)]
+        public float amountDeposited = 0;
+
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        [ProtoMember(2)]
+        public uint rateOfId = 0;
+    } -->
+        <protobuf type="float" name="amountDeposited" desc="存款金额"></protobuf>
+        <protobuf type="uint32" name="rateOfId" desc="利率ID"></protobuf>
+</proto>
+
+    <!-- /// <summary>
+    /// 银行存钱返回
+    /// </summary>
+    [ProtoContract]
+    public class BankSaveMoneyRsp : ProtoBody
+    {
+        public enum ErrorID
+        {
+            Success = 0,//成功
+            Failed = 1,//失败
+        }
+        [ProtoMember(1)] public ErrorID errorID;
+    } -->
+
+<proto id="8004" name="BankSaveMoney" desc="银行存钱返回" type="revc">
+    <protobuf type="uint8" name="errorID" desc="  Success = 0,//成功 Failed = 1,//失败"></protobuf>
+</proto>
+
+<!-- 
+
+/// <summary>
+/// 银行存钱通知
+/// </summary>
+[ProtoContract]
+    public class BankSaveMoneyNtf : ProtoBody
+    {
+        /// <summary>
+        /// 返回代码
+        /// </summary>
+        [ProtoMember(1)]
+        public int code = 0;
+
+        /// <summary>
+        /// 返回信息
+        /// </summary>
+        [ProtoMember(2)]
+        public string msg = "";
+    } -->
+
+<proto id="8005" name="BankSaveMoney" desc="银行存钱通知" type="ntf">
+    <protobuf type="uint16" name="code" desc="返回代码"></protobuf>
+    <protobuf type="string" name="msg" desc="返回信息"></protobuf>
+</proto>

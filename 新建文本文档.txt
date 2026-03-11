@@ -1,0 +1,8 @@
+node ui_export.js -ui D:\SVNPrj\meta\ui -out D:\SVNPrj\meta\resource -client D:\SVNPrj\meta\gameclient
+
+
+
+layaair2-cmd customui -c -d -m normal -w \"D:\\SVNPrj\\meta\\ui\" 
+
+
+D:\SVNPrj\meta\tools\qatools\npm

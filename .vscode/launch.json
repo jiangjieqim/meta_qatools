@@ -1,0 +1,142 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "ui_export",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+            "program": "ui_export.js",
+            "args": [
+                // "-atlas",
+                "-ui","D:\\SVNPrj\\meta\\ui",
+                "-out","D:\\SVNPrj\\meta\\resource",
+                "-client","D:\\SVNPrj\\meta\\gameclient"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "生成协议",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "buildproto.js",
+            "args": [
+                "-client","D:/jjq/game/gameclient/src/game/network/protocols",
+                "-server","D:/jjq/game/gameserver/Protocols/ProtoBody",
+                "-out","D:/jjq/game/mainproto"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "zipres",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "zipres.js",
+            "args": [
+                "-client","D:/jjq/game/gameclient/src/game/network/protocols",
+                "-server","D:/jjq/game/gameserver/Protocols/ProtoBody",
+                "-out","D:/jjq/game/mainproto"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "publish",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "publish",
+            "args": [
+                "-w","D:\\jjq\\game\\trunk\\gameclient",
+                "-r" ,"D:\\jjq\\game\\trunk\\resource",
+                "-o","D:\\jjq\\game\\trunk\\release",
+                "-imgsize","0.3",
+                "-justcode",
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "compile",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "compile",
+            "args": [
+                "-w","D:\\jjq\\game\\trunk\\gameclient",
+                //"-w","D:\\LayaTest\\a1",
+                
+                // "-c",
+                "--tsc"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "run ${file}",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "${file}",
+            "args": [
+             
+            ]
+        },
+
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "cellexport",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "cellexport",
+            "args": [
+                // "-w","D:\\jjq\\game\\trunk\\gameclient",
+                //"-w","D:\\LayaTest\\a1",
+                // 
+                // "-c"
+                // "--tsc"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "json2bAll",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+           
+          "program": "json2bAll",
+            "args": [
+                "-excels","D:\\jjq\\game\\trunk\\configs\\excels",
+                "-jsondir" ,"D:\\jjq\\game\\trunk\\resource\\res\\config\\export",
+                "-codedir","D:\\jjq\\game\\trunk\\gameclient\\src\\game\\static\\json\\struct",
+            ]
+        },
+    ]
+}
+//d:&cd D:\jjq\game\tools\qatools & node publish.js -w D:\jjq\game\gameclient -r D:\jjq\game\resource -o D:\jjq\game\out
+
+ // "program": "buildproto.js",
+            // "args": [
+            //     "-client","D:/jjq/game/gameclient/src/game/network",
+            //     "-server","D:/jjq/game/gameserver/Protocols/ProtoBody",
+            //     "-out","D:/jjq/game/mainproto"
+            // ]
