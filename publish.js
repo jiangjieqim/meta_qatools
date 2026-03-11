@@ -146,19 +146,19 @@ if(!workspace || !resource || !root_out){
 //前置准备
 function preWork(trunk){
     //更新代码
-    tryExecSync(`cd ${trunk}/gameclient & svn up`);
+    // tryExecSync(`cd ${trunk}/gameclient & svn up`);
 
     //更新资源
-    tryExecSync(`cd ${trunk}/resource & svn up & svn log -l 1`);
+    // tryExecSync(`cd ${trunk}/resource & svn up & svn log -l 1`);
 
     //更新协议
-    tryExecSync(`cd ${trunk}/protos & svn up & svn log -l 1`);
+    // tryExecSync(`cd ${trunk}/protos & svn up & svn log -l 1`);
 
     //更新配置表
-    tryExecSync(`cd ${trunk}/configs & svn up & svn log -l 1`);
+    // tryExecSync(`cd ${trunk}/configs & svn up & svn log -l 1`);
 
     //更新UI
-    tryExecSync(`cd ${trunk}/gameclient_ui & svn up & svn log -l 1`);
+    // tryExecSync(`cd ${trunk}/gameclient_ui & svn up & svn log -l 1`);
 
     //构建相关
     tryExecSync(`cd ${trunk}/gameclient/cmd & exportUI_Atlas.bat`);
