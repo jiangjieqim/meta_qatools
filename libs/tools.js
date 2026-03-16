@@ -55,13 +55,13 @@ function cmdCopy(desc,out){
      cmd = `copy "${desc}" "${out}"`;
     //  console.log(cmd);
      let s = execSync(cmd);
-     console.log("CmdCOPY",'\t',desc,'\t',out);
+    //  console.log("CmdCOPY",'\t',desc,'\t',out);
 }
 
 function copy(desc,out){
     let s = fs.readFileSync(desc,{encoding:"utf8"});
     fs.writeFileSync(out,s,{encoding:"utf8"});
-    console.log("COPY",'\t',desc,'\t',out);
+    // console.log("COPY",'\t',desc,'\t',out);
 }
 
 function checkSuffix(u,arr){
